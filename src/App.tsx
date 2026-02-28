@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { Result, BehaviorResult } from './components/Result'
 
 function App() {
   const [behavior, setBehavior] = useState('')
   const [previousBehavior, setPreviousBehavior] = useState('')
-  const [result, setResult] = useState('')
+  const [result, setResult] = useState<BehaviorResult | null>(null)
   const [loading, setLoading] = useState(false)
 
   const analyzeBehavior = async () => {
@@ -13,16 +14,18 @@ function App() {
     setPreviousBehavior(behavior)
     setBehavior('')
     setLoading(true)
-    setResult('')
+    setResult(null)
 
     try {
       const response = await axios.post('http://localhost:3001/api/analyze', {
         behavior,
       })
 
-      setResult(response.data.result)
+      const data = response.data.result
+      const parsed = typeof data === 'string' ? JSON.parse(data) : data
+      setResult(parsed)
     } catch (error) {
-      setResult('Error analysing behaviour.')
+      console.error('Error analysing behaviour.', error)
     }
 
     setLoading(false)
@@ -56,12 +59,7 @@ function App() {
       )}
 
       {result && (
-        <>
-          <p>{previousBehavior}</p>
-          <div className="mt-5 p-4 bg-gray-100 rounded-lg whitespace-pre-wrap">
-            {result}
-          </div>
-        </>
+        <Result behaviourResult={result} previousBehavior={previousBehavior} />
       )}
     </div>
   )
