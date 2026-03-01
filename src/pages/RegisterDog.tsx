@@ -3,17 +3,22 @@ import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 import { mockBreeds } from '../constants/breeds'
+import { supabase } from '../lib/supabase'
 
-const schema = z.object({
-  ownerName: z.string().min(1, 'Owner name is required'),
-  dogName: z.string().min(1, 'Dog name is required'),
-  dogBreed: z.string().min(1, 'Dog breed is required'),
-  customBreed: z.string().optional(),
-  dogAge: z.number().min(0, 'Dog age must be a positive number'),
-}).refine(
-  (data) => data.dogBreed !== 'other' || (data.customBreed && data.customBreed.trim().length > 0),
-  { message: 'Please specify the breed', path: ['customBreed'] }
-)
+const schema = z
+  .object({
+    ownerName: z.string().min(1, 'Owner name is required'),
+    dogName: z.string().min(1, 'Dog name is required'),
+    dogBreed: z.string().min(1, 'Dog breed is required'),
+    customBreed: z.string().optional(),
+    dogAge: z.number().min(0, 'Dog age must be a positive number'),
+  })
+  .refine(
+    (data) =>
+      data.dogBreed !== 'other' ||
+      (data.customBreed && data.customBreed.trim().length > 0),
+    { message: 'Please specify the breed', path: ['customBreed'] },
+  )
 
 type RegisterDogForm = z.infer<typeof schema>
 
@@ -40,8 +45,21 @@ export const RegisterDog = () => {
 
   const selectedBreed = watch('dogBreed')
 
-  const onSubmit = (data: RegisterDogForm) => {
-    console.log('Form submitted:', data)
+  const onSubmit = async (data: RegisterDogForm) => {
+    const { error } = await supabase.from('dogs').insert({
+      owner_name: data.ownerName,
+      dog_name: data.dogName,
+      dog_breed: data.dogBreed,
+      custom_breed: data?.customBreed ?? data.customBreed,
+      dog_age: data.dogAge,
+    })
+
+    if (error) {
+      console.error('Error saving dog:', error)
+    } else {
+      console.log('Dog registered successfully!')
+      form.reset()
+    }
   }
 
   return (
@@ -113,7 +131,9 @@ export const RegisterDog = () => {
               placeholder="Enter your dog's breed"
             />
             {errors.customBreed && (
-              <p className="text-red-500 text-sm mt-1">{errors.customBreed.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.customBreed.message}
+              </p>
             )}
           </>
         )}
