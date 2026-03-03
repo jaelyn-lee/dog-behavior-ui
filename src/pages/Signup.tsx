@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { supabase } from '../lib/supabaseClient'
+import { supabase } from '../lib/supabase'
 import { useNavigate } from 'react-router-dom'
 import { Icon } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person'
@@ -10,15 +10,26 @@ export default function Signup() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
-    const { error, data } = await supabase.auth.signUp({
+
+    if (!email || !password) {
+      alert('Please enter both email and password.')
+      return
+    }
+
+    setLoading(true)
+
+    const { error } = await supabase.auth.signUp({
       email,
       password,
     })
 
-    console.log('Signup response:', { error, data })
+    console.log('Signup response:', { error })
+
+    setLoading(false)
 
     if (error) {
       alert(error.message)
@@ -51,7 +62,7 @@ export default function Signup() {
           />
           <Icon component={LockIcon} />
         </div>
-        <Button type="submit">Sign Up</Button>
+        <Button type="submit">{loading ? 'Signing Up...' : 'Sign Up'}</Button>
       </form>
       <p className="text-sm text-center cursor-pointer">
         Already have an account?{' '}

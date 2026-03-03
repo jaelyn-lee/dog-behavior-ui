@@ -1,31 +1,56 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
 import { RequestPage } from './pages/RequestPage'
 import { RegisterDog } from './pages/RegisterDog'
 import Signup from './pages/Signup'
-import RequireAuth from './routes/RequireAuth'
 import { Dashboard } from './pages/Dashboard'
+import { Nav } from './components/Nav'
+import RequireAppAccess from './routes/RequireAppAccess'
+import { OnboardingName } from './pages/OnboardingName'
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
+      <Nav />
       <div className="max-w-150 mx-auto min-h-screen font-sans flex flex-col gap-2 items-center justify-center">
         <Routes>
           <Route
             path="/"
             element={
-              <RequireAuth>
+              <RequireAppAccess>
                 <Dashboard />
-              </RequireAuth>
+              </RequireAppAccess>
             }
           />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/register-dog" element={<RegisterDog />} />
-          <Route path="/request" element={<RequestPage />} />
+          <Route
+            path="/onboarding-name"
+            element={
+              <RequireAppAccess>
+                <OnboardingName />
+              </RequireAppAccess>
+            }
+          />
+          <Route
+            path="/register-dog"
+            element={
+              <RequireAppAccess>
+                <RegisterDog />
+              </RequireAppAccess>
+            }
+          />
+          <Route
+            path="/request"
+            element={
+              <RequireAppAccess>
+                <RequestPage />
+              </RequireAppAccess>
+            }
+          />
         </Routes>
       </div>
-    </BrowserRouter>
+    </>
   )
 }
 
