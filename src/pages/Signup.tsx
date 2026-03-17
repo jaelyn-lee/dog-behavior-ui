@@ -66,9 +66,12 @@ export default function Signup() {
       </form>
       <p className="text-sm text-center cursor-pointer">
         Already have an account?{' '}
-        <a onClick={() => navigate('/login')} className="text-blue-500">
+        <button
+          onClick={() => navigate('/login')}
+          className="text-blue-500 hover:underline"
+        >
           Log in
-        </a>
+        </button>
       </p>
     </div>
   )

@@ -1,5 +1,6 @@
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -47,7 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUserProfile(data)
   }
 
-  const refreshProfile = async () => {
+  const refreshProfile = useCallback(async () => {
     const userId = supabase.auth.getUser
       ? (await supabase.auth.getUser()).data.user?.id
       : user?.id
@@ -56,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return
     }
     await fetchProfile(userId)
-  }
+  }, [user])
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data }) => {
@@ -110,7 +111,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       refreshProfile,
       signOut,
     }),
-    [loading, session, user, userProfile],
+    [loading, session, user, userProfile, refreshProfile],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -1,6 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Spinner } from '@/components/ui/spinner'
 
 export const Nav = () => {
   const navigate = useNavigate()
@@ -14,8 +13,6 @@ export const Nav = () => {
 
   const isActive = (path: string) =>
     location.pathname === path ? 'underline underline-offset-4 font-bold' : ''
-
-  // if (loading) return <Spinner />
 
   return (
     <>
