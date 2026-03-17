@@ -51,7 +51,7 @@ export const RequestPage = () => {
         }
 
         const response = await axios.post(
-          'http://localhost:3001/api/analyses',
+          `${process.env.REACT_APP_RENDER_API_URL}/api/analyses`,
           {
             behaviour,
           },
@@ -66,7 +66,7 @@ export const RequestPage = () => {
       } else {
         // Guest user flow - save to localStorage
         const response = await axios.post(
-          'http://localhost:3001/api/analyses/guest',
+          `${process.env.REACT_APP_RENDER_API_URL}/api/analyses/guest`,
           { behaviour },
         )
         setResult(response.data.result)
