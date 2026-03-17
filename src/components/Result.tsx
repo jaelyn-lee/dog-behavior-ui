@@ -1,18 +1,18 @@
-export interface BehaviorResult {
+export interface BehaviourResult {
   psychological_reasons: string[]
   environmental_triggers: string[]
   when_to_worry: string
 }
 
 interface ResultProps {
-  behaviourResult: BehaviorResult
-  previousBehavior: string
+  behaviourResult: BehaviourResult
+  previousBehaviour: string
 }
 
-export const Result = ({ behaviourResult, previousBehavior }: ResultProps) => {
+export const Result = ({ behaviourResult, previousBehaviour }: ResultProps) => {
   return (
     <>
-      <p>{previousBehavior}</p>
+      <p>{previousBehaviour}</p>
       <div className="mt-5 p-4 bg-gray-100 rounded-lg whitespace-pre-wrap">
         <h2 className="text-xl font-bold mb-2">Psychological Reasons:</h2>
         <ul className="list-disc list-inside mb-4">

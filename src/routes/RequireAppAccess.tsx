@@ -53,9 +53,9 @@ export default function RequireAppAccess({
     // location.pathname 포함: 페이지 이동 시 스킵 로직 반영
   }, [user?.id, location.pathname])
 
-  // 1) 로그인 체크
+  // Allowing GUEST access for now, but this can be changed to require login if needed
   if (!loading && !user) {
-    return <Navigate to="/login" replace state={{ from: location }} />
+    return <>{children}</>
   }
   if (loading) return <div className="p-4">Loading...</div>
 

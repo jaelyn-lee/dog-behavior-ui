@@ -60,6 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data }) => {
+      console.log('Initial session on mount:', data.session?.access_token)
       const currentSession = data.session ?? null
       console.log('Initial session:', currentSession)
       setSession(currentSession)

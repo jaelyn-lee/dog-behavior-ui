@@ -57,9 +57,7 @@ export default function Login() {
           />
           <Icon component={LockIcon} />
         </div>
-        <Button type="submit">
-          {loading ? 'Logging in...' : 'Login'}
-        </Button>
+        <Button type="submit">{loading ? 'Logging in...' : 'Login'}</Button>
       </form>
       <p className="text-sm text-center cursor-pointer">
         Don't have an account?{' '}
