@@ -20,7 +20,7 @@ export default function RequireAppAccess({
       if (user && !userProfile) await refreshProfile()
     }
     run()
-  }, [user?.id])
+  }, [user, refreshProfile, userProfile])
 
   // 4) 강아지 체크 (온보딩 페이지에서는 굳이 체크 안 해도 됨)
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function RequireAppAccess({
 
     checkDogs()
     // location.pathname 포함: 페이지 이동 시 스킵 로직 반영
-  }, [user?.id, location.pathname])
+  }, [user, refreshProfile, userProfile, location.pathname])
 
   // Allowing GUEST access for now, but this can be changed to require login if needed
   if (!loading && !user) {
