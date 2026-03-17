@@ -12,8 +12,10 @@ function App() {
   return (
     <>
       <Nav />
-      <div className="max-w-150 mx-auto min-h-screen font-sans flex flex-col gap-2 items-center justify-center">
-        <Routes>
+      <div className="max-w-150 mx-auto h-screen font-sans flex flex-col">
+        <main className="flex-1 w-full overflow-y-auto">
+          <div className="w-full px-4 mt-6">
+            <Routes>
           {/* ── Guest access allowed ── */}
           <Route path="/" element={<RequestPage />} />
           <Route path="/login" element={<Login />} />
@@ -45,7 +47,9 @@ function App() {
               </RequireAppAccess>
             }
           />
-        </Routes>
+            </Routes>
+          </div>
+        </main>
       </div>
     </>
   )

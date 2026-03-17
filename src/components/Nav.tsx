@@ -16,7 +16,7 @@ export const Nav = () => {
 
   return (
     <>
-      <nav className="flex flex-row bg-primary text-light justify-between items-center p-4">
+      <nav className="flex flex-col items-end bg-primary text-light sm:flex-row sm:justify-between sm:items-center p-4">
         <div
           className="flex flex-row items-center gap-2 cursor-pointer"
           onClick={() => navigate('/')}
