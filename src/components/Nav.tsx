@@ -16,7 +16,7 @@ export const Nav = () => {
 
   return (
     <>
-      <nav className="flex flex-col items-end bg-primary text-light sm:flex-row sm:justify-between sm:items-center p-4">
+      <nav className="flex flex-col items-end bg-light text-primary sm:flex-row sm:justify-between sm:items-center p-4">
         <div
           className="flex flex-row items-center gap-2 cursor-pointer"
           onClick={() => navigate('/')}
@@ -25,12 +25,18 @@ export const Nav = () => {
           <h1 className="text-2xl font-bold">Analyse your pups</h1>
         </div>
         <div className="flex flex-row items-center gap-6">
-          <div>
+          <div className="flex flex-row items-center gap-4">
             <button
               className={`hover:underline underline-offset-4 ${isActive('/')}`}
               onClick={() => navigate('/')}
             >
               Analyse
+            </button>
+            <button
+              className={`hover:underline underline-offset-4 ${isActive('/dog-breed-scanner')}`}
+              onClick={() => navigate('/dog-breed-scanner')}
+            >
+              Scan Breed
             </button>
             {user && (
               <button

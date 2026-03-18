@@ -15,6 +15,9 @@ export const RequestPage = () => {
   const [result, setResult] = useState<BehaviourResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [loadingMessage, setLoadingMessage] = useState('Analysing...')
+  const [focused, setFocused] = useState(false)
+
+  const isEmpty = !behaviour.trim()
 
   useEffect(() => {
     if (loading) {
@@ -99,20 +102,50 @@ export const RequestPage = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl text-center">🐶 Dog Behaviour Analyser</h1>
+      <div className="text-center">
+        <div className="text-4xl mb-2.5 leading-none">🐶</div>
+        <h1 className="text-dark m-0 font-extrabold text-[clamp(20px,4vw,26px)] tracking-[-0.02em]">
+          Dog Behaviour Analyser
+        </h1>
+        <p className="text-dark text-sm mt-1.5 tracking-[0.03em]">
+          Describe what your pup is doing and we'll decode it
+        </p>
+      </div>
 
-      <textarea
-        rows={5}
-        className="w-full p-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        placeholder="Describe your dog's behaviour..."
-        value={behaviour}
-        onChange={(e) => setBehaviour(e.target.value)}
-      />
+      <div
+        className={`rounded-[20px] bg-white overflow-hidden border-2 transition-all duration-200 ${
+          focused
+            ? 'border-dark shadow-[0_6px_24px_#F28F7928]'
+            : 'border-dark/10 shadow-[0_2px_12px_#59280B10]'
+        }`}
+      >
+        <textarea
+          rows={5}
+          className="w-full text-dark text-sm py-4 px-[18px] border-0 outline-none resize-none leading-[1.65] bg-transparent font-[inherit] box-border"
+          placeholder="e.g. My dog keeps spinning in circles before lying down..."
+          value={behaviour}
+          onChange={(e) => setBehaviour(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+        />
+        <div className="flex items-center justify-between px-4 py-[10px] border-t border-t-dark/10 bg-light/50">
+          <span className="text-xs text-dark/30">
+            {behaviour.length > 0
+              ? `${behaviour.length} characters`
+              : 'Start typing...'}
+          </span>
+          <span className="text-lg">🐾</span>
+        </div>
+      </div>
 
       <button
         onClick={analyseBehaviour}
-        className="mt-2.5 px-5 py-2.5 cursor-pointer border-2 border-blue-500 text-blue-500 rounded-lg disabled:opacity-50 w-1/2 mx-auto block"
-        disabled={loading}
+        disabled={loading || isEmpty}
+        className={`flex items-center justify-center gap-2 mx-auto min-w-[160px] py-[13px] px-8 rounded-[14px] border-0 font-bold text-[15px] font-[inherit] transition-all duration-200 ${
+          loading || isEmpty
+            ? 'cursor-not-allowed bg-dark/10 text-dark/40 shadow-none'
+            : 'cursor-pointer bg-primary text-white shadow-[0_4px_16px_#F28F7950]'
+        }`}
       >
         {loading ? (
           <span>
@@ -120,9 +153,29 @@ export const RequestPage = () => {
             <Spinner size={16} className="inline-block ml-2" />
           </span>
         ) : (
-          'Analyse'
+          'Analyse 🔍'
         )}
       </button>
+
+      {loading && (
+        <div className="flex items-center justify-center gap-1.5 pt-3 pb-1">
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className="w-2 h-2 rounded-full bg-primary opacity-70"
+              style={{
+                animation: `bounce 1.2s ${i * 0.2}s infinite ease-in-out`,
+              }}
+            />
+          ))}
+          <style>{`
+            @keyframes bounce {
+              0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+              40%            { transform: scale(1.2); opacity: 1; }
+            }
+          `}</style>
+        </div>
+      )}
 
       {result && (
         <Result
