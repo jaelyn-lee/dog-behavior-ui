@@ -16,7 +16,9 @@ function StatBar({
     <div className="mb-2.5">
       <div className="flex justify-between mb-1">
         <span className="text-dark text-xs opacity-60">{label}</span>
-        <span className="text-xs font-bold" style={{ color }}>{value}%</span>
+        <span className="text-xs font-bold" style={{ color }}>
+          {value}%
+        </span>
       </div>
       <div className="h-[7px] bg-dark/10 rounded overflow-hidden">
         <div
@@ -146,7 +148,7 @@ export const DogBreedScanner = () => {
   }
 
   return (
-    <div className="min-h-screen bg-light flex flex-col items-center px-4 pt-7 pb-12 relative">
+    <div className="min-h-screen bg-light flex flex-col items-center pt-7 pb-12 relative">
       <style>{`
         @keyframes slideUp {
           from { opacity: 0; transform: translateY(18px); }
@@ -179,14 +181,14 @@ export const DogBreedScanner = () => {
       >
         {/* Corner brackets */}
         {cameraActive &&
-          ([
-            'absolute w-[22px] h-[22px] z-10 top-[10px] left-[10px] border-t-[2.5px] border-l-[2.5px] border-primary',
-            'absolute w-[22px] h-[22px] z-10 top-[10px] right-[10px] border-t-[2.5px] border-r-[2.5px] border-primary',
-            'absolute w-[22px] h-[22px] z-10 bottom-[10px] left-[10px] border-b-[2.5px] border-l-[2.5px] border-primary',
-            'absolute w-[22px] h-[22px] z-10 bottom-[10px] right-[10px] border-b-[2.5px] border-r-[2.5px] border-primary',
-          ] as const).map((cls, i) => (
-            <div key={i} className={cls} />
-          ))}
+          (
+            [
+              'absolute w-[22px] h-[22px] z-10 top-[10px] left-[10px] border-t-[2.5px] border-l-[2.5px] border-primary',
+              'absolute w-[22px] h-[22px] z-10 top-[10px] right-[10px] border-t-[2.5px] border-r-[2.5px] border-primary',
+              'absolute w-[22px] h-[22px] z-10 bottom-[10px] left-[10px] border-b-[2.5px] border-l-[2.5px] border-primary',
+              'absolute w-[22px] h-[22px] z-10 bottom-[10px] right-[10px] border-b-[2.5px] border-r-[2.5px] border-primary',
+            ] as const
+          ).map((cls, i) => <div key={i} className={cls} />)}
 
         {/* Scan line */}
         {scanning && (
@@ -197,7 +199,7 @@ export const DogBreedScanner = () => {
         )}
 
         {/* Video / Preview */}
-        <div className="aspect-[4/3] relative bg-light">
+        <div className="aspect-[4/3] relative bg-white/10">
           {capturedImage && !cameraActive ? (
             <img
               src={capturedImage}
@@ -219,7 +221,7 @@ export const DogBreedScanner = () => {
               <div className="w-[72px] h-[72px] rounded-full bg-primary/10 flex items-center justify-center text-[32px]">
                 📷
               </div>
-              <p className="text-dark/30 text-[13px] text-center m-0">
+              <p className="text-dark text-sm text-center m-0">
                 Turn on your camera
                 <br />
                 and show your pup! 🐾
@@ -273,7 +275,7 @@ export const DogBreedScanner = () => {
 
       {/* Error */}
       {error && (
-        <div className='bg-primary/10 border border-primary/55 rounded-[14px] p-[12px_16px] text-dark text-[13px] text-center mt-4'>
+        <div className="bg-primary/10 border border-primary/55 rounded-[14px] p-[12px_16px] text-dark text-[13px] text-center mt-4">
           {error}
         </div>
       )}
@@ -282,15 +284,12 @@ export const DogBreedScanner = () => {
       {result && (
         <div className="w-full max-w-[480px] mt-5 bg-white rounded-[24px] overflow-hidden border-2 border-dark/10 shadow-[0_8px_32px_#59280B14] [animation:slideUp_0.5s_cubic-bezier(0.16,1,0.3,1)]">
           {!result.found ? (
-            <div className='p-7 text-center'>
-              <div className='text-[44px] mb-2.5'>🔍</div>
-              <p className='text-dark/50 m-0 text-[14px]'>
-                {result.message}
-              </p>
+            <div className="p-7 text-center">
+              <div className="text-[44px] mb-2.5">🔍</div>
+              <p className="text-dark/50 m-0 text-[14px]">{result.message}</p>
               <button
                 onClick={reset}
-                className='mt-4 px-6 py-2.5 rounded-[12px] border-2 border-primary bg-transparent text-primary font-bold text-[13px] cursor-pointer'
-                  
+                className="mt-4 px-6 py-2.5 rounded-[12px] border-2 border-primary bg-transparent text-primary font-bold text-[13px] cursor-pointer"
               >
                 Retry
               </button>
@@ -298,9 +297,7 @@ export const DogBreedScanner = () => {
           ) : (
             <>
               {/* Breed header */}
-              <div
-              className='p-[22px_22px_18px] bg-gradient-to-br from-tertiary/44 to-light/88 border-b-[1.5px] border-dark/12'
-              >
+              <div className="p-[22px_22px_18px] bg-gradient-to-br from-tertiary/44 to-light/88 border-b-[1.5px] border-dark/12">
                 <div className="flex justify-between items-start">
                   <div>
                     <div className="text-primary text-[10px] tracking-[0.18em] font-extrabold mb-[5px] uppercase">
@@ -309,9 +306,7 @@ export const DogBreedScanner = () => {
                     <h2 className="text-dark m-0 text-[26px] font-extrabold tracking-[-0.02em]">
                       {result.korean_breed}
                     </h2>
-                    <p
-                      className='text-dark/65 m-0 text-[13px]'
-                    >
+                    <p className="text-dark/65 m-0 text-[13px]">
                       {result.breed}
                     </p>
                   </div>
@@ -322,10 +317,14 @@ export const DogBreedScanner = () => {
                         : 'bg-tertiary/60 border-tertiary'
                     }`}
                   >
-                    <div className={`text-[20px] font-extrabold ${result.confidence >= 85 ? 'text-secondary' : 'text-dark'}`}>
+                    <div
+                      className={`text-[20px] font-extrabold ${result.confidence >= 85 ? 'text-secondary' : 'text-dark'}`}
+                    >
                       {result.confidence}%
                     </div>
-                    <div className="text-dark/40 text-[10px] tracking-[0.05em]">Accuracy</div>
+                    <div className="text-dark/40 text-[10px] tracking-[0.05em]">
+                      Accuracy
+                    </div>
                   </div>
                 </div>
               </div>
@@ -337,10 +336,17 @@ export const DogBreedScanner = () => {
                   { label: 'Size', value: result.size, icon: '📏' },
                   { label: 'Lifespan', value: result.lifespan, icon: '⏳' },
                 ].map((item) => (
-                  <div key={item.label} className="bg-white py-[14px] px-2.5 text-center">
+                  <div
+                    key={item.label}
+                    className="bg-white py-[14px] px-2.5 text-center"
+                  >
                     <div className="text-[20px] mb-1">{item.icon}</div>
-                    <div className="text-dark/60 text-[11px] mb-[3px]">{item.label}</div>
-                    <div className="text-[12px] text-dark font-bold">{item.value}</div>
+                    <div className="text-dark/60 text-[11px] mb-[3px]">
+                      {item.label}
+                    </div>
+                    <div className="text-[12px] text-dark font-bold">
+                      {item.value}
+                    </div>
                   </div>
                 ))}
               </div>

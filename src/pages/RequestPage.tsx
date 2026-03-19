@@ -101,11 +101,11 @@ export const RequestPage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 max-w-150 mx-auto mt-20">
       <div className="text-center">
         <div className="text-4xl mb-2.5 leading-none">🐶</div>
-        <h1 className="text-dark m-0 font-extrabold text-[clamp(20px,4vw,26px)] tracking-[-0.02em]">
-          Dog Behaviour Analyser
+        <h1 className="text-dark m-0 font-extrabold text-[clamp(20px,4vw,32px)] tracking-[-0.02em]">
+          Dog Behaviour <span className="text-primary">Analyser</span>
         </h1>
         <p className="text-dark text-sm mt-1.5 tracking-[0.03em]">
           Describe what your pup is doing and we'll decode it

@@ -13,9 +13,9 @@ function App() {
   return (
     <>
       <Nav />
-      <div className="max-w-150 mx-auto h-screen font-sans flex flex-col">
-        <main className="flex-1 w-full overflow-y-auto">
-          <div className="w-full px-4 mt-6">
+      <div className="mx-auto h-screen font-sans flex flex-col">
+        <main className="flex-1 w-full overflow-y-auto mb-20">
+          <div className="w-full px-8 mt-6">
             <Routes>
               {/* ── Guest access allowed ── */}
               <Route path="/" element={<RequestPage />} />
@@ -24,7 +24,7 @@ function App() {
               <Route path="/dog-breed-scanner" element={<DogBreedScanner />} />
 
               {/* ── Authenticated user access ── */}
-              {/* ── 로그인 유저만 ── */}
+              {/* ── Only for logged-in users ── */}
               <Route
                 path="/history"
                 element={

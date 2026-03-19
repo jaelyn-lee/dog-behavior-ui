@@ -27,7 +27,7 @@ export default function RequireAppAccess({
     const checkDogs = async () => {
       if (!user) return
 
-      // 온보딩 중이면 강아지 체크 스킵해도 됨
+      // Skip dog check on onboarding page to prevent loop
       if (location.pathname === '/onboarding-name') {
         setCheckingDogs(false)
         setHasDog(false)
