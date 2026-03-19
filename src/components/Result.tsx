@@ -61,7 +61,7 @@ export const Result = ({ behaviourResult, previousBehaviour }: ResultProps) => {
             <CarouselContent className="w-full">
               {/* Card 1 — Psychological Reasons */}
               <CarouselItem>
-                <div className="bg-white border-2 border-primary rounded-2xl p-5 shadow-[0_4px_20px] shadow-primary/20 min-h-[200px]">
+                <div className="bg-white border-2 border-primary rounded-2xl p-5 shadow-[0_4px_20px] shadow-primary/20 min-h-50">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center text-lg shrink-0">
                       🧠
@@ -144,8 +144,8 @@ export const Result = ({ behaviourResult, previousBehaviour }: ResultProps) => {
               </CarouselItem>
             </CarouselContent>
 
-            <CarouselPrevious className="border border-dark/15 bg-white text-dark shadow-sm" />
-            <CarouselNext className="border border-dark/15 bg-white text-dark shadow-sm" />
+            <CarouselPrevious className="hidden sm:flex border border-dark/15 bg-white text-dark shadow-sm" />
+            <CarouselNext className="hidden sm:flex border border-dark/15 bg-white text-dark shadow-sm" />
           </Carousel>
 
           {/* Swipe hint — first card only */}

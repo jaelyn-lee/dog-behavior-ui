@@ -148,7 +148,7 @@ export const DogBreedScanner = () => {
   }
 
   return (
-    <div className="min-h-screen bg-light flex flex-col items-center pt-7 pb-12 relative">
+    <div className="min-h-screen bg-light flex flex-col items-center pb-12 relative">
       <style>{`
         @keyframes slideUp {
           from { opacity: 0; transform: translateY(18px); }

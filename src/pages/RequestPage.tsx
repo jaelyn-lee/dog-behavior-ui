@@ -101,7 +101,7 @@ export const RequestPage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4 max-w-150 mx-auto mt-20 mb-20">
+    <div className="flex flex-col gap-4 max-w-150 mx-auto mt-10 mb-20">
       <div className="text-center">
         <div className="text-4xl mb-2.5 leading-none">🐶</div>
         <h1 className="text-dark m-0 font-extrabold text-[clamp(20px,4vw,32px)] tracking-[-0.02em]">
