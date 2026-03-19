@@ -3,16 +3,6 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
 
-// ── Colour Schema ──────────────────────────────────────────
-const C = {
-  primary: '#F28F79', // main buttons, accents
-  secondary: '#58A690', // sub buttons, stats
-  tertiary: '#F2BF91', // highlights, tags
-  dark: '#59280B', // text, outlines
-  light: '#F2E8E4', // background
-}
-// ──────────────────────────────────────────────────────────
-
 function StatBar({
   label,
   value,
@@ -23,44 +13,15 @@ function StatBar({
   color: string
 }) {
   return (
-    <div style={{ marginBottom: 10 }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginBottom: 4,
-        }}
-      >
-        <span
-          className="text-dark"
-          style={{
-            fontSize: 12,
-            opacity: 0.6,
-            fontFamily: "'DM Sans', sans-serif",
-          }}
-        >
-          {label}
-        </span>
-        <span style={{ fontSize: 12, color: color, fontWeight: 700 }}>
-          {value}%
-        </span>
+    <div className="mb-2.5">
+      <div className="flex justify-between mb-1">
+        <span className="text-dark text-xs opacity-60">{label}</span>
+        <span className="text-xs font-bold" style={{ color }}>{value}%</span>
       </div>
-      <div
-        style={{
-          height: 7,
-          background: `${C.dark}18`,
-          borderRadius: 4,
-          overflow: 'hidden',
-        }}
-      >
+      <div className="h-[7px] bg-dark/10 rounded overflow-hidden">
         <div
-          style={{
-            height: '100%',
-            width: `${value}%`,
-            background: color,
-            borderRadius: 4,
-            transition: 'width 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
-          }}
+          className="h-full rounded transition-[width] duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+          style={{ width: `${value}%`, background: color }}
         />
       </div>
     </div>
@@ -185,20 +146,8 @@ export const DogBreedScanner = () => {
   }
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: C.light,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        fontFamily: "'DM Sans', sans-serif",
-        padding: '28px 16px 48px',
-        position: 'relative',
-      }}
-    >
+    <div className="min-h-screen bg-light flex flex-col items-center px-4 pt-7 pb-12 relative">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&display=swap');
         @keyframes slideUp {
           from { opacity: 0; transform: translateY(18px); }
           to   { opacity: 1; transform: translateY(0); }
@@ -206,133 +155,54 @@ export const DogBreedScanner = () => {
       `}</style>
 
       {/* Soft bg blobs */}
-      <div
-        style={{
-          position: 'fixed',
-          top: -100,
-          right: -80,
-          width: 340,
-          height: 340,
-          borderRadius: '50%',
-          background: `radial-gradient(circle, ${C.primary}28 0%, transparent 70%)`,
-          pointerEvents: 'none',
-        }}
-      />
-      <div
-        style={{
-          position: 'fixed',
-          bottom: -60,
-          left: -60,
-          width: 260,
-          height: 260,
-          borderRadius: '50%',
-          background: `radial-gradient(circle, ${C.secondary}22 0%, transparent 70%)`,
-          pointerEvents: 'none',
-        }}
-      />
+      <div className="fixed -top-[100px] -right-[80px] w-[340px] h-[340px] rounded-full bg-[radial-gradient(circle,#F28F7928_0%,transparent_70%)] pointer-events-none" />
+      <div className="fixed -bottom-[60px] -left-[60px] w-[260px] h-[260px] rounded-full bg-[radial-gradient(circle,#58A69022_0%,transparent_70%)] pointer-events-none" />
 
       {/* ── Header ── */}
-      <div style={{ textAlign: 'center', marginBottom: 28, zIndex: 1 }}>
-        <div style={{ fontSize: 40, marginBottom: 6 }}>🐾</div>
-        <h1
-          style={{
-            fontSize: 'clamp(24px, 5vw, 32px)',
-            fontWeight: 800,
-            color: C.dark,
-            margin: 0,
-            letterSpacing: '-0.03em',
-          }}
-        >
-          Pup<span style={{ color: C.primary }}>Scan</span>
+      <div className="text-center mb-7 z-[1]">
+        <div className="text-[40px] mb-1.5">🐾</div>
+        <h1 className="text-[clamp(24px,5vw,32px)] font-extrabold text-dark m-0 tracking-[-0.03em]">
+          Pup<span className="text-primary">Scan</span>
         </h1>
-        <p
-          style={{
-            color: `${C.dark}88`,
-            fontSize: 13,
-            margin: '6px 0 0',
-            letterSpacing: '0.04em',
-          }}
-        >
+        <p className="text-dark/50 text-[13px] mt-1.5 tracking-[0.04em]">
           AI powered dog breed identifier
         </p>
       </div>
 
       {/* ── Camera card ── */}
       <div
-        style={{
-          width: '100%',
-          maxWidth: 480,
-          borderRadius: 24,
-          overflow: 'hidden',
-          position: 'relative',
-          background: '#fff',
-          border: `2px solid ${cameraActive ? C.primary : `${C.dark}18`}`,
-          boxShadow: cameraActive
-            ? `0 8px 32px ${C.primary}33`
-            : `0 4px 16px ${C.dark}14`,
-          transition: 'border-color 0.4s, box-shadow 0.4s',
-        }}
+        className={`w-full max-w-[480px] rounded-[24px] overflow-hidden relative bg-white border-2 transition-[border-color,box-shadow] duration-[400ms] ${
+          cameraActive
+            ? 'border-primary shadow-[0_8px_32px_#F28F7933]'
+            : 'border-dark/10 shadow-[0_4px_16px_#59280B14]'
+        }`}
       >
         {/* Corner brackets */}
         {cameraActive &&
-          ['tl', 'tr', 'bl', 'br'].map((c) => (
-            <div
-              key={c}
-              style={{
-                position: 'absolute',
-                width: 22,
-                height: 22,
-                zIndex: 10,
-                top: c.startsWith('t') ? 10 : 'auto',
-                bottom: c.startsWith('b') ? 10 : 'auto',
-                left: c.endsWith('l') ? 10 : 'auto',
-                right: c.endsWith('r') ? 10 : 'auto',
-                borderTop: c.startsWith('t')
-                  ? `2.5px solid ${C.primary}`
-                  : 'none',
-                borderBottom: c.startsWith('b')
-                  ? `2.5px solid ${C.primary}`
-                  : 'none',
-                borderLeft: c.endsWith('l')
-                  ? `2.5px solid ${C.primary}`
-                  : 'none',
-                borderRight: c.endsWith('r')
-                  ? `2.5px solid ${C.primary}`
-                  : 'none',
-              }}
-            />
+          ([
+            'absolute w-[22px] h-[22px] z-10 top-[10px] left-[10px] border-t-[2.5px] border-l-[2.5px] border-primary',
+            'absolute w-[22px] h-[22px] z-10 top-[10px] right-[10px] border-t-[2.5px] border-r-[2.5px] border-primary',
+            'absolute w-[22px] h-[22px] z-10 bottom-[10px] left-[10px] border-b-[2.5px] border-l-[2.5px] border-primary',
+            'absolute w-[22px] h-[22px] z-10 bottom-[10px] right-[10px] border-b-[2.5px] border-r-[2.5px] border-primary',
+          ] as const).map((cls, i) => (
+            <div key={i} className={cls} />
           ))}
 
         {/* Scan line */}
         {scanning && (
           <div
-            style={{
-              position: 'absolute',
-              left: 0,
-              right: 0,
-              zIndex: 8,
-              top: `${scanLine}%`,
-              height: 2.5,
-              background: `linear-gradient(90deg, transparent, ${C.primary}, ${C.tertiary}, ${C.primary}, transparent)`,
-              boxShadow: `0 0 10px ${C.primary}`,
-              transition: 'top 0.016s linear',
-            }}
+            className="absolute left-0 right-0 z-[8] h-[2.5px] shadow-[0_0_10px_#F28F79] transition-[top] duration-[16ms] linear bg-[linear-gradient(90deg,transparent,#F28F79,#F2BF91,#F28F79,transparent)]"
+            style={{ top: `${scanLine}%` }}
           />
         )}
 
         {/* Video / Preview */}
-        <div
-          style={{
-            aspectRatio: '4/3',
-            position: 'relative',
-            background: C.light,
-          }}
-        >
+        <div className="aspect-[4/3] relative bg-light">
           {capturedImage && !cameraActive ? (
             <img
               src={capturedImage}
               alt="Captured"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              className="w-full h-full object-cover"
             />
           ) : (
             <video
@@ -340,49 +210,16 @@ export const DogBreedScanner = () => {
               autoPlay
               playsInline
               muted
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                display: cameraActive ? 'block' : 'none',
-              }}
+              className={`w-full h-full object-cover ${cameraActive ? 'block' : 'hidden'}`}
             />
           )}
 
           {!cameraActive && !capturedImage && (
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 10,
-              }}
-            >
-              <div
-                style={{
-                  width: 72,
-                  height: 72,
-                  borderRadius: '50%',
-                  background: `${C.primary}20`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: 32,
-                }}
-              >
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5">
+              <div className="w-[72px] h-[72px] rounded-full bg-primary/10 flex items-center justify-center text-[32px]">
                 📷
               </div>
-              <p
-                style={{
-                  color: `${C.dark}55`,
-                  fontSize: 13,
-                  textAlign: 'center',
-                  margin: 0,
-                }}
-              >
+              <p className="text-dark/30 text-[13px] text-center m-0">
                 Turn on your camera
                 <br />
                 and show your pup! 🐾
@@ -391,29 +228,8 @@ export const DogBreedScanner = () => {
           )}
 
           {scanning && (
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: `${C.primary}0a`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <div
-                style={{
-                  background: '#ffffffcc',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: 14,
-                  padding: '12px 22px',
-                  border: `1.5px solid ${C.primary}55`,
-                  color: C.dark,
-                  fontSize: 13,
-                  fontWeight: 700,
-                  letterSpacing: '0.05em',
-                }}
-              >
+            <div className="absolute inset-0 bg-primary/[0.04] flex items-center justify-center">
+              <div className="bg-white/80 backdrop-blur-[10px] rounded-[14px] px-[22px] py-3 border border-primary/30 text-dark text-[13px] font-bold tracking-[0.05em]">
                 🔍 Analysing...
               </div>
             </div>
@@ -421,30 +237,11 @@ export const DogBreedScanner = () => {
         </div>
 
         {/* Controls */}
-        <div
-          style={{
-            padding: '14px 16px',
-            display: 'flex',
-            gap: 10,
-            background: '#fff',
-          }}
-        >
+        <div className="py-[14px] px-4 flex gap-2.5 bg-white">
           {!cameraActive ? (
             <button
               onClick={startCamera}
-              style={{
-                flex: 1,
-                padding: '13px',
-                borderRadius: 14,
-                border: 'none',
-                cursor: 'pointer',
-                background: C.primary,
-                color: '#fff',
-                fontWeight: 700,
-                fontSize: 14,
-                fontFamily: "'DM Sans', sans-serif",
-                boxShadow: `0 4px 16px ${C.primary}55`,
-              }}
+              className="flex-1 py-[13px] rounded-[14px] border-0 cursor-pointer bg-primary text-white font-bold text-sm shadow-[0_4px_16px_#F28F7955]"
             >
               📷 Turn on Camera
             </button>
@@ -453,37 +250,17 @@ export const DogBreedScanner = () => {
               <button
                 onClick={analyseBreed}
                 disabled={scanning}
-                style={{
-                  flex: 2,
-                  padding: '13px',
-                  borderRadius: 14,
-                  border: 'none',
-                  cursor: scanning ? 'not-allowed' : 'pointer',
-                  background: scanning ? `${C.dark}18` : C.primary,
-                  color: scanning ? `${C.dark}55` : '#fff',
-                  fontWeight: 700,
-                  fontSize: 14,
-                  fontFamily: "'DM Sans', sans-serif",
-                  boxShadow: scanning ? 'none' : `0 4px 16px ${C.primary}55`,
-                  transition: 'all 0.2s',
-                }}
+                className={`flex-[2] py-[13px] rounded-[14px] border-0 font-bold text-sm transition-all duration-200 ${
+                  scanning
+                    ? 'cursor-not-allowed bg-dark/10 text-dark/30 shadow-none'
+                    : 'cursor-pointer bg-primary text-white shadow-[0_4px_16px_#F28F7955]'
+                }`}
               >
                 {scanning ? 'Analysing...' : '🐾 Scan Breed'}
               </button>
               <button
                 onClick={stopCamera}
-                style={{
-                  flex: 1,
-                  padding: '13px',
-                  borderRadius: 14,
-                  border: `1.5px solid ${C.dark}22`,
-                  cursor: 'pointer',
-                  background: 'transparent',
-                  color: `${C.dark}88`,
-                  fontWeight: 600,
-                  fontSize: 13,
-                  fontFamily: "'DM Sans', sans-serif",
-                }}
+                className="flex-1 py-[13px] rounded-[14px] border border-dark/10 cursor-pointer bg-transparent text-dark/50 font-semibold text-[13px]"
               >
                 Stop
               </button>
@@ -496,59 +273,24 @@ export const DogBreedScanner = () => {
 
       {/* Error */}
       {error && (
-        <div
-          style={{
-            maxWidth: 480,
-            width: '100%',
-            marginTop: 14,
-            background: `${C.primary}18`,
-            border: `1.5px solid ${C.primary}55`,
-            borderRadius: 14,
-            padding: '12px 16px',
-            color: C.dark,
-            fontSize: 13,
-            textAlign: 'center',
-          }}
-        >
+        <div className='bg-primary/10 border border-primary/55 rounded-[14px] p-[12px_16px] text-dark text-[13px] text-center mt-4'>
           {error}
         </div>
       )}
 
       {/* ── Result Card ── */}
       {result && (
-        <div
-          style={{
-            maxWidth: 480,
-            width: '100%',
-            marginTop: 20,
-            background: '#fff',
-            border: `2px solid ${C.dark}14`,
-            borderRadius: 24,
-            overflow: 'hidden',
-            boxShadow: `0 8px 32px ${C.dark}14`,
-            animation: 'slideUp 0.5s cubic-bezier(0.16,1,0.3,1)',
-          }}
-        >
+        <div className="w-full max-w-[480px] mt-5 bg-white rounded-[24px] overflow-hidden border-2 border-dark/10 shadow-[0_8px_32px_#59280B14] [animation:slideUp_0.5s_cubic-bezier(0.16,1,0.3,1)]">
           {!result.found ? (
-            <div style={{ padding: 28, textAlign: 'center' }}>
-              <div style={{ fontSize: 44, marginBottom: 10 }}>🔍</div>
-              <p style={{ color: `${C.dark}88`, margin: 0, fontSize: 14 }}>
+            <div className='p-7 text-center'>
+              <div className='text-[44px] mb-2.5'>🔍</div>
+              <p className='text-dark/50 m-0 text-[14px]'>
                 {result.message}
               </p>
               <button
                 onClick={reset}
-                style={{
-                  marginTop: 18,
-                  padding: '10px 24px',
-                  borderRadius: 12,
-                  border: `1.5px solid ${C.primary}`,
-                  background: 'transparent',
-                  color: C.primary,
-                  cursor: 'pointer',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  fontFamily: "'DM Sans', sans-serif",
-                }}
+                className='mt-4 px-6 py-2.5 rounded-[12px] border-2 border-primary bg-transparent text-primary font-bold text-[13px] cursor-pointer'
+                  
               >
                 Retry
               </button>
@@ -557,158 +299,62 @@ export const DogBreedScanner = () => {
             <>
               {/* Breed header */}
               <div
-                style={{
-                  padding: '22px 22px 18px',
-                  background: `linear-gradient(135deg, ${C.tertiary}44, ${C.light}88)`,
-                  borderBottom: `1.5px solid ${C.dark}12`,
-                }}
+              className='p-[22px_22px_18px] bg-gradient-to-br from-tertiary/44 to-light/88 border-b-[1.5px] border-dark/12'
               >
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'flex-start',
-                  }}
-                >
+                <div className="flex justify-between items-start">
                   <div>
-                    <div
-                      style={{
-                        fontSize: 10,
-                        color: C.primary,
-                        letterSpacing: '0.18em',
-                        fontWeight: 800,
-                        marginBottom: 5,
-                        textTransform: 'uppercase',
-                      }}
-                    >
+                    <div className="text-primary text-[10px] tracking-[0.18em] font-extrabold mb-[5px] uppercase">
                       Breed Identified
                     </div>
-                    <h2
-                      style={{
-                        margin: 0,
-                        fontSize: 26,
-                        fontWeight: 800,
-                        color: C.dark,
-                        letterSpacing: '-0.02em',
-                      }}
-                    >
+                    <h2 className="text-dark m-0 text-[26px] font-extrabold tracking-[-0.02em]">
                       {result.korean_breed}
                     </h2>
                     <p
-                      style={{
-                        margin: '3px 0 0',
-                        color: `${C.dark}66`,
-                        fontSize: 13,
-                      }}
+                      className='text-dark/65 m-0 text-[13px]'
                     >
                       {result.breed}
                     </p>
                   </div>
                   <div
-                    style={{
-                      background:
-                        result.confidence >= 85
-                          ? `${C.secondary}20`
-                          : `${C.tertiary}60`,
-                      border: `1.5px solid ${result.confidence >= 85 ? C.secondary : C.tertiary}`,
-                      borderRadius: 14,
-                      padding: '8px 14px',
-                      textAlign: 'center',
-                      minWidth: 62,
-                    }}
+                    className={`rounded-[14px] px-[14px] py-2 text-center min-w-[62px] border ${
+                      result.confidence >= 85
+                        ? 'bg-secondary/20 border-secondary'
+                        : 'bg-tertiary/60 border-tertiary'
+                    }`}
                   >
-                    <div
-                      style={{
-                        fontSize: 20,
-                        fontWeight: 800,
-                        color: result.confidence >= 85 ? C.secondary : C.dark,
-                      }}
-                    >
+                    <div className={`text-[20px] font-extrabold ${result.confidence >= 85 ? 'text-secondary' : 'text-dark'}`}>
                       {result.confidence}%
                     </div>
-                    <div
-                      style={{
-                        fontSize: 10,
-                        color: `${C.dark}66`,
-                        letterSpacing: '0.05em',
-                      }}
-                    >
-                      Accuracy
-                    </div>
+                    <div className="text-dark/40 text-[10px] tracking-[0.05em]">Accuracy</div>
                   </div>
                 </div>
               </div>
 
               {/* Info grid */}
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr 1fr',
-                  gap: 1,
-                  background: `${C.dark}12`,
-                }}
-              >
+              <div className="grid grid-cols-3 gap-px bg-dark/10">
                 {[
                   { label: 'Origin', value: result.origin, icon: '🌍' },
                   { label: 'Size', value: result.size, icon: '📏' },
                   { label: 'Lifespan', value: result.lifespan, icon: '⏳' },
                 ].map((item) => (
-                  <div
-                    key={item.label}
-                    style={{
-                      background: '#fff',
-                      padding: '14px 10px',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <div style={{ fontSize: 20, marginBottom: 4 }}>
-                      {item.icon}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: 11,
-                        color: `${C.dark}66`,
-                        marginBottom: 3,
-                      }}
-                    >
-                      {item.label}
-                    </div>
-                    <div
-                      style={{ fontSize: 12, color: C.dark, fontWeight: 700 }}
-                    >
-                      {item.value}
-                    </div>
+                  <div key={item.label} className="bg-white py-[14px] px-2.5 text-center">
+                    <div className="text-[20px] mb-1">{item.icon}</div>
+                    <div className="text-dark/60 text-[11px] mb-[3px]">{item.label}</div>
+                    <div className="text-[12px] text-dark font-bold">{item.value}</div>
                   </div>
                 ))}
               </div>
 
               {/* Temperament tags */}
-              <div style={{ padding: '18px 22px 10px' }}>
-                <div
-                  style={{
-                    fontSize: 11,
-                    color: `${C.dark}66`,
-                    letterSpacing: '0.12em',
-                    marginBottom: 10,
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                  }}
-                >
+              <div className="px-[22px] pt-[18px] pb-2.5">
+                <div className="text-dark/60 text-[11px] tracking-[0.12em] mb-2.5 font-bold uppercase">
                   Temperament
                 </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
+                <div className="flex flex-wrap gap-[7px]">
                   {result.temperament?.map((t: any) => (
                     <span
                       key={t}
-                      style={{
-                        background: `${C.tertiary}44`,
-                        border: `1.5px solid ${C.tertiary}`,
-                        borderRadius: 8,
-                        padding: '5px 12px',
-                        fontSize: 12,
-                        color: C.dark,
-                        fontWeight: 600,
-                      }}
+                      className="bg-tertiary/40 border border-tertiary rounded-[8px] px-3 py-[5px] text-[12px] text-dark font-semibold"
                     >
                       {t}
                     </span>
@@ -717,17 +363,8 @@ export const DogBreedScanner = () => {
               </div>
 
               {/* Stats */}
-              <div style={{ padding: '10px 22px 16px' }}>
-                <div
-                  style={{
-                    fontSize: 11,
-                    color: `${C.dark}66`,
-                    letterSpacing: '0.12em',
-                    marginBottom: 14,
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                  }}
-                >
+              <div className="px-[22px] pt-2.5 pb-4">
+                <div className="text-[11px] text-dark/60 tracking-[0.12em] mb-[14px] font-bold uppercase">
                   Trait Indicators
                 </div>
                 <StatBar
@@ -748,74 +385,27 @@ export const DogBreedScanner = () => {
               </div>
 
               {/* Fun fact */}
-              <div
-                style={{
-                  margin: '0 22px 22px',
-                  background: `${C.primary}14`,
-                  border: `1.5px solid ${C.primary}44`,
-                  borderRadius: 14,
-                  padding: '14px 16px',
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: 11,
-                    color: '#F28F79',
-                    fontWeight: 800,
-                    marginBottom: 5,
-                    letterSpacing: '0.08em',
-                  }}
-                >
+              <div className="mx-[22px] mb-[22px] bg-primary/[0.08] border border-primary/40 rounded-[14px] px-4 py-[14px]">
+                <div className="text-[11px] text-primary font-extrabold mb-[5px] tracking-[0.08em]">
                   💡 Fun Fact
                 </div>
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: 13,
-                    color: '#59280B',
-                    lineHeight: 1.65,
-                    opacity: 0.85,
-                  }}
-                >
+                <p className="m-0 text-[13px] text-dark leading-[1.65] opacity-85">
                   {result.fun_fact}
                 </p>
               </div>
 
               {/* Action buttons */}
-              <div style={{ padding: '0 22px 22px', display: 'flex', gap: 10 }}>
+              <div className="px-[22px] pb-[22px] flex gap-2.5">
                 <button
                   onClick={reset}
-                  style={{
-                    flex: 1,
-                    padding: '13px',
-                    borderRadius: 14,
-                    border: `1.5px solid ${C.primary}`,
-                    background: 'transparent',
-                    color: C.primary,
-                    cursor: 'pointer',
-                    fontSize: 13,
-                    fontWeight: 700,
-                    fontFamily: "'DM Sans', sans-serif",
-                  }}
+                  className="flex-1 py-[13px] rounded-[14px] border border-primary bg-transparent text-primary cursor-pointer text-[13px] font-bold"
                 >
                   🔄 Rescan
                 </button>
                 {cameraActive && (
                   <button
                     onClick={analyseBreed}
-                    style={{
-                      flex: 1,
-                      padding: '13px',
-                      borderRadius: 14,
-                      border: 'none',
-                      background: C.secondary,
-                      color: '#fff',
-                      cursor: 'pointer',
-                      fontSize: 13,
-                      fontWeight: 700,
-                      fontFamily: "'DM Sans', sans-serif",
-                      boxShadow: `0 4px 12px ${C.secondary}44`,
-                    }}
+                    className="flex-1 py-[13px] rounded-[14px] border-0 bg-secondary text-white cursor-pointer text-[13px] font-bold shadow-[0_4px_12px_#58A69044]"
                   >
                     📷 Retake
                   </button>
