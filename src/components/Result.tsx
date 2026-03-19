@@ -56,9 +56,9 @@ export const Result = ({ behaviourResult, previousBehaviour }: ResultProps) => {
           />
         ))}
 
-        <div className="relative">
+        <div className="relative w-full">
           <Carousel setApi={setApi}>
-            <CarouselContent>
+            <CarouselContent className="w-full">
               {/* Card 1 — Psychological Reasons */}
               <CarouselItem>
                 <div className="bg-white border-2 border-primary rounded-2xl p-5 shadow-[0_4px_20px] shadow-primary/20 min-h-[200px]">

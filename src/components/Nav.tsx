@@ -25,7 +25,7 @@ export const Nav = () => {
           <h1 className="text-2xl font-bold">Analyse your pups</h1>
         </div>
         <div className="flex flex-row items-center gap-6">
-          <div className="flex flex-row items-center gap-4">
+          <div className="flex flex-row items-center gap-6">
             <button
               className={`hover:underline underline-offset-4 ${isActive('/')}`}
               onClick={() => navigate('/')}
@@ -67,20 +67,12 @@ export const Nav = () => {
               </button>
             </div>
           ) : (
-            <div className="flex flex-row items-center gap-2">
-              <button
-                className="px-4 py-2 rounded-lg hover:underline"
-                onClick={() => navigate('/login')}
-              >
-                Log in
-              </button>
-              <button
-                className="bg-light text-primary px-4 py-2 rounded-lg hover:opacity-90"
-                onClick={() => navigate('/signup')}
-              >
-                Sign up
-              </button>
-            </div>
+            <button
+              className="px-4 py-2 rounded-lg hover:underline"
+              onClick={() => navigate('/login')}
+            >
+              Log in
+            </button>
           )}
         </div>
       </nav>
